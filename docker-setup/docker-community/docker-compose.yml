@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  shilp-server:
+    image: anvitraai/shilp-server
+    container_name: shilp-server
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./data/shilp:/data/shilp
+      - ./data/upload:/data/upload

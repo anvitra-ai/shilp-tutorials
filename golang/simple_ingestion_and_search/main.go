@@ -108,11 +108,8 @@ func checkIfCollectionExists(client *shilp.Client) bool {
 
 func dropAndaddData(client *shilp.Client) {
 
-	_, err := client.DropCollection(col)
-	if err != nil {
-		log.Fatalf("Failed to drop existing collection: %v", err)
-	}
-	_, err = client.AddCollection(shilp.AddCollectionRequest{
+	client.DropCollection(col)
+	_, err := client.AddCollection(shilp.AddCollectionRequest{
 		Name:                 col,
 		HasMetadataStorage:   true,
 		StorageType:          shilp.StorageBackendFile,
