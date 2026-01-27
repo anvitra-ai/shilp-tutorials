@@ -1,0 +1,27 @@
+{
+    "name": "shilp-typescript-tutorial",
+    "version": "1.0.0",
+    "description": "Simple ingestion and search tutorial using Shilp SDK for TypeScript",
+    "main": "dist/main.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/main.js",
+        "dev": "ts-node src/main.ts"
+    },
+    "keywords": [
+        "shilp",
+        "search",
+        "ingestion",
+        "tutorial"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@anvitra-ai/shilp-sdk-ts": "^0.11.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "ts-node": "^10.9.0",
+        "typescript": "^5.0.0"
+    }
+}
