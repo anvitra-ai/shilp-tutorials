@@ -1,0 +1,10 @@
+[package]
+name = "simple_ingestion_and_search"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+serde_json = "1.0.149"
+shilp-sdk = "0.12.2"
+tokio = { version = "1.49.0", features = ["full"] }
