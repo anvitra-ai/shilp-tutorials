@@ -1,7 +1,7 @@
 services:
   # Node Manager Service
   niyanta-service:
-    image: <replace-with-enterprise-repo>/anvitra/niyanta-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/niyanta-service:latest
     ports:
       - "3004:3004"
     environment:
@@ -14,7 +14,7 @@ services:
 
   # TEI Servoce - 1
   tei-service-1:
-    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/tei-service:latest
     depends_on:
       - niyanta-service
     environment:
@@ -27,7 +27,7 @@ services:
 
   # TEI Service - 2
   tei-service-2:
-    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/tei-service:latest
     depends_on:
       - niyanta-service
     environment:
@@ -40,7 +40,7 @@ services:
 
   # TEI Service - 3
   tei-service-3:
-    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/tei-service:latest
     depends_on:
       - niyanta-service
     environment:
@@ -53,7 +53,7 @@ services:
 
   # TEI Service - 4
   tei-service-4:
-    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/tei-service:latest
     depends_on:
       - niyanta-service
     environment:
@@ -66,7 +66,7 @@ services:
 
   # TEI Service - 5
   tei-service-5:
-    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/tei-service:latest
     depends_on:
       - niyanta-service
     environment:
@@ -79,7 +79,7 @@ services:
 
   # TEI Service - 6
   tei-service-6:
-    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/tei-service:latest
     depends_on:
       - niyanta-service
     environment:
@@ -91,7 +91,7 @@ services:
       - db-network
 
   shilp-write:
-    image: <replace-with-enterprise-repo>/anvitra/shilp-server:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/shilp-server:latest
     depends_on:
       - niyanta-service
     environment:
@@ -133,7 +133,7 @@ services:
       - shilp-write-data:/data
 
   shilp-read-1:
-    image: <replace-with-enterprise-repo>/anvitra/shilp-server:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/shilp-server:latest
     depends_on:
       - niyanta-service
     environment:
@@ -176,7 +176,7 @@ services:
       - shilp-read-1-data:/data
 
   shilp-read-2:
-    image: <replace-with-enterprise-repo>/anvitra/shilp-server:latest
+    image: 255325274555.dkr.ecr.ap-south-1.amazonaws.com/anvitra/shilp-server:latest
     depends_on:
       - niyanta-service
     environment:
