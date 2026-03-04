@@ -1,0 +1,239 @@
+services:
+  # Node Manager Service
+  niyanta-service:
+    image: <replace-with-enterprise-repo>/anvitra/niyanta-service:latest
+    ports:
+      - "3004:3004"
+    environment:
+      - GRPC_PORT=50051
+      - STORAGE_LOCATION=/data
+    networks:
+      - db-network
+    volumes:
+      - niyanta-data:/data
+
+  # TEI Servoce - 1
+  tei-service-1:
+    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://niyanta-service:3004
+      - SERVER_HOST=tei-service-1
+    ports:
+      - "8000:8000"
+    networks:
+      - db-network
+
+  # TEI Service - 2
+  tei-service-2:
+    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://niyanta-service:3004
+      - SERVER_HOST=tei-service-2
+    ports:
+      - "8001:8000"
+    networks:
+      - db-network
+
+  # TEI Service - 3
+  tei-service-3:
+    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://niyanta-service:3004
+      - SERVER_HOST=tei-service-3
+    ports:
+      - "8002:8000"
+    networks:
+      - db-network
+
+  # TEI Service - 4
+  tei-service-4:
+    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://niyanta-service:3004
+      - SERVER_HOST=tei-service-4
+    ports:
+      - "8003:8000"
+    networks:
+      - db-network
+
+  # TEI Service - 5
+  tei-service-5:
+    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://niyanta-service:3004
+      - SERVER_HOST=tei-service-5
+    ports:
+      - "8004:8000"
+    networks:
+      - db-network
+
+  # TEI Service - 6
+  tei-service-6:
+    image: <replace-with-enterprise-repo>/anvitra/tei-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://niyanta-service:3004
+      - SERVER_HOST=tei-service-6
+    ports:
+      - "8005:8000"
+    networks:
+      - db-network
+
+  shilp-write:
+    image: <replace-with-enterprise-repo>/anvitra/shilp-server:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_S3_UPLOAD_BUCKET=${AWS_S3_UPLOAD_BUCKET}
+      - AWS_S3_DB_BUCKET=${AWS_S3_DB_BUCKET}
+      - AWS_ENABLE_STORAGE=${AWS_ENABLE_STORAGE}
+      - AWS_DEFAULT_EMBEDDING_MODEL=${AWS_DEFAULT_EMBEDDING_MODEL}
+      - AWS_ENABLE_EMBEDDING_MODELS=${AWS_ENABLE_EMBEDDING_MODELS}
+      - AWS_IS_DB_DEFAULT_STORAGE=${AWS_IS_DB_DEFAULT_STORAGE}
+      - AWS_IS_UPLOAD_DEFAULT_STORAGE=${AWS_IS_UPLOAD_DEFAULT_STORAGE}
+      - ENABLE_DISK_STORAGE=${ENABLE_DISK_STORAGE}
+      - ENABLE_METRICS=true
+      - AUTO_LOAD_COLLECTIONS=
+      - SHILP_FILE_PATH=/data/db
+      - UPLOAD_FILE_PATH=/data/uploads
+      - ENABLE_DOCS_CREATION=false
+      - LOG_LEVEL=debug
+      - TEI_SERVER_GRPC_ADDR=niyanta-service:50051
+      - ENABLED_DISTRIBUTED_EMBEDDING=true
+      - ENABLE_SERVICE_DISCOVERY=true
+      - ENABLE_OPLOGGING=true
+      - SERVICE_DISCOVERY_URL=http://niyanta-service:3004
+      - IS_READ_REPLICA=false
+      - IS_WRITE_REPLICA=true
+      - IS_SINGLE_NODE=false
+      - SERVICE_ID=shilp-write-1
+      - SERVER_PORT=3000
+      - SERVICE_ACCOUNT_ID=default
+      - SERVER_HOST=shilp-write
+      - INGEST_SOURCE_MONGO_URI=mongodb://mongo:27017
+    ports:
+      - "3000:3000"
+    networks:
+      - db-network
+    volumes:
+      - shilp-write-data:/data
+
+  shilp-read-1:
+    image: <replace-with-enterprise-repo>/anvitra/shilp-server:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_S3_UPLOAD_BUCKET=${AWS_S3_UPLOAD_BUCKET}
+      - AWS_S3_DB_BUCKET=${AWS_S3_DB_BUCKET}
+      - AWS_ENABLE_STORAGE=${AWS_ENABLE_STORAGE}
+      - AWS_DEFAULT_EMBEDDING_MODEL=${AWS_DEFAULT_EMBEDDING_MODEL}
+      - AWS_ENABLE_EMBEDDING_MODELS=${AWS_ENABLE_EMBEDDING_MODELS}
+      - AWS_IS_DB_DEFAULT_STORAGE=${AWS_IS_DB_DEFAULT_STORAGE}
+      - AWS_IS_UPLOAD_DEFAULT_STORAGE=${AWS_IS_UPLOAD_DEFAULT_STORAGE}
+      - ENABLE_DISK_STORAGE=${ENABLE_DISK_STORAGE}
+      - ENABLE_METRICS=true
+      - AUTO_LOAD_COLLECTIONS=
+      - SHILP_FILE_PATH=/data/db
+      - UPLOAD_FILE_PATH=/data/uploads
+      - ENABLE_DOCS_CREATION=false
+      - LOG_LEVEL=debug
+      - TEI_SERVER_GRPC_ADDR=niyanta-service:50051
+      - ENABLED_DISTRIBUTED_EMBEDDING=true
+      - ENABLE_SERVICE_DISCOVERY=true
+      - ENABLE_OPLOGGING=true
+      - SERVICE_DISCOVERY_URL=http://niyanta-service:3004
+      - IS_READ_REPLICA=true
+      - IS_WRITE_REPLICA=false
+      - IS_SINGLE_NODE=false
+      - SERVICE_ID=shilp-read-1
+      - SERVER_PORT=3000
+      - SERVICE_ACCOUNT_ID=default
+      - REPLICA_SYNC_TIMEOUT_SECONDS=5
+      - SERVER_HOST=shilp-read-1
+      - INGEST_SOURCE_MONGO_URI=mongodb://mongo:27017
+    ports:
+      - "4000:3000"
+    networks:
+      - db-network
+    volumes:
+      - shilp-read-1-data:/data
+
+  shilp-read-2:
+    image: <replace-with-enterprise-repo>/anvitra/shilp-server:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_S3_UPLOAD_BUCKET=${AWS_S3_UPLOAD_BUCKET}
+      - AWS_S3_DB_BUCKET=${AWS_S3_DB_BUCKET}
+      - AWS_ENABLE_STORAGE=${AWS_ENABLE_STORAGE}
+      - AWS_DEFAULT_EMBEDDING_MODEL=${AWS_DEFAULT_EMBEDDING_MODEL}
+      - AWS_ENABLE_EMBEDDING_MODELS=${AWS_ENABLE_EMBEDDING_MODELS}
+      - AWS_IS_DB_DEFAULT_STORAGE=${AWS_IS_DB_DEFAULT_STORAGE}
+      - AWS_IS_UPLOAD_DEFAULT_STORAGE=${AWS_IS_UPLOAD_DEFAULT_STORAGE}
+      - ENABLE_DISK_STORAGE=${ENABLE_DISK_STORAGE}
+      - ENABLE_METRICS=true
+      - AUTO_LOAD_COLLECTIONS=
+      - SHILP_FILE_PATH=/data/db
+      - UPLOAD_FILE_PATH=/data/uploads
+      - ENABLE_DOCS_CREATION=false
+      - LOG_LEVEL=info
+      - TEI_SERVER_GRPC_ADDR=niyanta-service:50051
+      - ENABLED_DISTRIBUTED_EMBEDDING=true
+      - ENABLE_SERVICE_DISCOVERY=true
+      - ENABLE_OPLOGGING=true
+      - SERVICE_DISCOVERY_URL=http://niyanta-service:3004
+      - IS_READ_REPLICA=true
+      - IS_WRITE_REPLICA=false
+      - IS_SINGLE_NODE=false
+      - SERVICE_ID=shilp-read-2
+      - SERVER_PORT=3000
+      - SERVICE_ACCOUNT_ID=default
+      - REPLICA_SYNC_TIMEOUT_SECONDS=5
+      - SERVER_HOST=shilp-read-2
+      - INGEST_SOURCE_MONGO_URI=mongodb://mongo:27017
+    ports:
+      - "4001:3000"
+    networks:
+      - db-network
+    volumes:
+      - shilp-read-2-data:/data
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - db-network
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  db-network:
+    driver: bridge
+
+volumes:
+  niyanta-data:
+  shilp-write-data:
+  shilp-read-1-data:
+  shilp-read-2-data:
+  mongo-data:
