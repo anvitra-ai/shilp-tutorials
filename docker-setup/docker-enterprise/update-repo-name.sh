@@ -5,4 +5,5 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-find . -type f -exec sed -i '' "s/<replace-with-enterprise-repo>/$1/g" {} +
+# find all the occurence of <replace-with-enterprise-repo> in docker-compose file and replace it with the argument passed to the script
+sed -i '' "s/<replace-with-enterprise-repo>/$1/g" docker-compose.yml

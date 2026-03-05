@@ -125,6 +125,8 @@ services:
       - SERVICE_ACCOUNT_ID=default
       - SERVER_HOST=shilp-write
       - INGEST_SOURCE_MONGO_URI=mongodb://mongo:27017
+      - NLI_SERVER_ADDR=http://arthaka-service:2999
+      - ENABLE_NLI=true
     ports:
       - "3000:3000"
     networks:
@@ -168,6 +170,8 @@ services:
       - REPLICA_SYNC_TIMEOUT_SECONDS=5
       - SERVER_HOST=shilp-read-1
       - INGEST_SOURCE_MONGO_URI=mongodb://mongo:27017
+      - NLI_SERVER_ADDR=http://arthaka-service:2999
+      - ENABLE_NLI=true
     ports:
       - "4000:3000"
     networks:
@@ -211,8 +215,27 @@ services:
       - REPLICA_SYNC_TIMEOUT_SECONDS=5
       - SERVER_HOST=shilp-read-2
       - INGEST_SOURCE_MONGO_URI=mongodb://mongo:27017
+      - NLI_SERVER_ADDR=http://arthaka-service:2999
+      - ENABLE_NLI=true
     ports:
       - "4001:3000"
+    networks:
+      - db-network
+    volumes:
+      - shilp-read-2-data:/data
+
+  arthaka-service:
+    image: <replace-with-enterprise-repo>/anvitra/arthaka-service:latest
+    depends_on:
+      - niyanta-service
+    environment:
+      - GROQ_API_KEY=${NLI_GROQ_API_KEY}
+      - GROQ_BASE_URL=${NLI_GROQ_BASE_URL}
+      - GROQ_DEFAULT_MODEL=${NLI_GROQ_DEFAULT_MODEL}
+      - LLM_PROVIDER=${NLI_LLM_PROVIDER}
+      - TRAINING_SERVER_URL=${NLI_TRAINING_SERVER_URL}
+    ports:
+      - "2999:2999"
     networks:
       - db-network
     volumes:
