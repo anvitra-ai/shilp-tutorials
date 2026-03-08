@@ -234,6 +234,7 @@ services:
       - GROQ_DEFAULT_MODEL=${NLI_GROQ_DEFAULT_MODEL}
       - LLM_PROVIDER=${NLI_LLM_PROVIDER}
       - TRAINING_SERVER_URL=${NLI_TRAINING_SERVER_URL}
+      - CLASSIFIER_STRATEGY_US_STOCKS=confidence_gap
     ports:
       - "2999:2999"
     networks:
