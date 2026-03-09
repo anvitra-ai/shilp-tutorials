@@ -1,4 +1,4 @@
-# Docker community edition setup
+# Docker Enterprise edition setup
 
 To setup Anvitra using docker, run the following commands
 
